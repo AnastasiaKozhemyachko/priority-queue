@@ -13,7 +13,11 @@ class MaxHeap {
 	}
 
 	pop() {
-		
+        if(this.root == null){
+            return;
+        }
+        this.root.priority;
+        this.detachRoot();
 	}
 
 	detachRoot() {
@@ -25,7 +29,14 @@ class MaxHeap {
 	}
     
 	restoreRootFromLastInsertedNode(detached) {
-		
+		if(this.root.left.left==null){
+		    var a = this.root.right;
+		    a.left = this.root.left;
+		    this.root=a;
+		    this.root.parent = null;
+		    this.root.left.parent=a;
+		    return;
+		}
 	}
 
 	size() {
@@ -42,7 +53,6 @@ class MaxHeap {
                 }
             }
         }
-		
 	}
 
 	isEmpty() {
@@ -57,8 +67,8 @@ class MaxHeap {
 	clear() {
         this.root = null;
         this.parentNodes = []; 
-	}
-//вставить узел
+    }
+    
 	insertNode(node) {
         if(this.root == null){
             this.root = node;
@@ -132,22 +142,20 @@ class MaxHeap {
                 return; 
             }
 	}
-//подднять вверх
+
 	shiftNodeUp(node) {
         while (node.parent!=null && node.priority>node.parent.priority){
             node.swapWithParent();
             this.shiftNodeUp(node);
             }
-
-                this.clear();
-                
-                if(node.parent !=null){
-                    this.insertNode(node.parent); 
-                    return;
-                }
-                this.insertNode(node);
+            this.clear();   
+            if(node.parent !=null){
+                this.insertNode(node.parent); 
+                return;
+            }
+            this.insertNode(node);
 	}
-//опустить вниз
+
 	shiftNodeDown(node) {
         while (node.right!=null && node.left!=null){
             if (node.right.priority > node.priority || node.left.priority > node.priority){
@@ -174,5 +182,4 @@ class MaxHeap {
     }
 }
 module.exports = MaxHeap;
-
-//39
+//40
