@@ -8,9 +8,8 @@ class MaxHeap {
 
 	push(data, priority) {
         var node = new Node(data, priority);
-        
-        this.shiftNodeUp(node);
         this.insertNode(node);
+        this.shiftNodeUp(node);
 	}
 
 	pop() {
@@ -18,8 +17,11 @@ class MaxHeap {
 	}
 
 	detachRoot() {
-        this.root = null;
-		
+        var nroot = new Node();
+        nroot = this.root;
+        this.root = null;	
+        this.parentNodes.shift();	
+        return nroot;
 	}
     
 	restoreRootFromLastInsertedNode(detached) {
@@ -27,16 +29,29 @@ class MaxHeap {
 	}
 
 	size() {
+        if(this.root==null){
+            return 0;
+        }
+        else{
+            if(this.root.left == null){
+                return 1;
+            }
+            else{
+                if(this.root.left.left == null){
+                    return 2;
+                }
+            }
+        }
 		
 	}
 
 	isEmpty() {
-        // if(this.root == null && this.parentNodes == []){
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
+        if(this.root == null){
+            return true;
+        }
+        else{
+            return false;
+        }
 	}
 
 	clear() {
@@ -50,7 +65,7 @@ class MaxHeap {
             this.parentNodes =[];
             if(this.root.left == null){
                 this.parentNodes = [this.root];
-
+                return;
             }
             if(this.root.right == null){
                 this.parentNodes = [this.root, this.root.left];
@@ -78,36 +93,42 @@ class MaxHeap {
                 this.root.left = node;
                 this.parentNodes =[];
                 this.parentNodes = [this.root, this.root.left];
+                node.parent = this.root;
                 return;  
             }
             if(this.root.right == null){
                 this.root.right = node;
                 this.parentNodes =[];
                 this.parentNodes = [this.root.left, this.root.right];
+                node.parent = this.root;
                 return;   
             }
             if(this.root.left.left == null){
                 this.root.left.left = node;
                 this.parentNodes =[];
                 this.parentNodes =[this.root.left, this.root.right, this.root.left.left];
+                node.parent = this.root.left;
                 return;  
             }
             if(this.root.left.right == null){
                 this.root.left.right = node;
                 this.parentNodes =[];
                 this.parentNodes =[this.root.right, this.root.left.left, this.root.left.right];
+                node.parent = this.root.left;
                 return;  
             }
             if(this.root.right.left == null){
                 this.root.right.left = node;
                 this.parentNodes =[];
                 this.parentNodes =[this.root.right, this.root.left.left, this.root.left.right, this.root.right.left];
+                node.parent = this.root.right;
                 return;   
             }
             if(this.root.right.right == null){
                 this.root.right.right = node;
                 this.parentNodes =[];
                 this.parentNodes =[this.root.left.left, this.root.left.right, this.root.right.left, this.root.right.right];
+                node.parent = this.root.right;
                 return; 
             }
 	}
@@ -119,6 +140,11 @@ class MaxHeap {
             }
 
                 this.clear();
+                
+                if(node.parent !=null){
+                    this.insertNode(node.parent); 
+                    return;
+                }
                 this.insertNode(node);
 	}
 //опустить вниз
@@ -148,3 +174,5 @@ class MaxHeap {
     }
 }
 module.exports = MaxHeap;
+
+//39
