@@ -18,6 +18,7 @@ class MaxHeap {
 	}
 
 	detachRoot() {
+        this.root = null;
 		
 	}
     
@@ -114,6 +115,7 @@ class MaxHeap {
 	shiftNodeUp(node) {
         while (node.parent!=null && node.priority>node.parent.priority){
             node.swapWithParent();
+            this.shiftNodeUp(node);
             }
 
                 this.clear();
@@ -125,15 +127,18 @@ class MaxHeap {
             if (node.right.priority > node.priority || node.left.priority > node.priority){
                 if(node.left.priority > node.right.priority){
                     node.left.swapWithParent();
+                    this.shiftNodeDown(node);
                 }
                 else{
                     node.right.swapWithParent();
+                    this.shiftNodeDown(node);
                 }
             }
         }
         while (node.left!=null){
             if (node.left.priority > node.priority){
                     node.left.swapWithParent();
+                    this.shiftNodeDown(node);
                 }
         }
         this.clear();
