@@ -17,11 +17,10 @@ class MaxHeap {
             return;
         }
         let k = this.root.data;
-        //this.root.priority;
         let n = this.detachRoot();
-        // this.restoreRootFromLastInsertedNode(b);
+        //this.restoreRootFromLastInsertedNode(n);
         // this.shiftNodeDown(this.root);
-        // return k;
+        return k;
 	}
 
 	detachRoot() {
@@ -43,8 +42,8 @@ class MaxHeap {
             return;
         }
         if(detached.left.right==null){
-            let a = detached.left.right;
-            detached.left.right = null;
+            let a = detached.left.left;
+            detached.left.left = null;
             a.parent =null;
             this.root = a;
             this.insertNode(detached.left);
